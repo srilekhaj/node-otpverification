@@ -1,0 +1,44 @@
+Template ID: d-3bef33dc60504072b052e13b410e456b
+SERVICE ID: VA6beb78d22f1a2bef88dab3b5c1ebfa64
+SENDGRID_API_KEY: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
+TWILIO_ACCOUNT_SID: SK169932b6a758f6793b54b766dd9c023e
+TWILIO_AUTH_TOKEN = Y8RmQpGLBi2Alj0qHLys31s0UKitEfAs
+
+
+exports.signup = (req, res) => {
+
+            client
+                .verify
+                .services(process.env.SERVICEID)
+                .verifications
+                .create({
+                    to: `+91${req.body.number}`,
+                    channel: 'sms'
+                })
+                .then((data) => {
+                    res.status(200).json({ data });
+                });
+        
+
+    
+}
+
+exports.otp = (req, res) => {
+    client
+        .verify
+        .services(process.env.SERVICEID)
+        .verificationChecks
+        .create({
+            to: `+91${req.query.number}`,
+            code: req.query.code
+        })
+        .then((data) => {
+            if (data) {
+                res.send(200).json(data)
+            }
+        })
+        .catch((err) => {
+            res.status(400).send(err);
+
+        })
+}
