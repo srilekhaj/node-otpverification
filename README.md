@@ -1,2 +1,3 @@
 # node-otpverification
-otpverify using twilio
+otpverify using twilio and
+sql db auth
